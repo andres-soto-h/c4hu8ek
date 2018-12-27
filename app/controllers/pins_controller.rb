@@ -18,7 +18,6 @@ class PinsController < ApplicationController
       render :new
     end
   end
-
   private
     def pin_params
       params.require(:pin).permit(:title, :image_url)
