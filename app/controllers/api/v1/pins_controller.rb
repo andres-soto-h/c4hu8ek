@@ -15,9 +15,10 @@ class Api::V1::PinsController < ApplicationController
   end
 
   def basic_auth
-    user = User.find_by(email: request.headers['X-USER-EMAIL'])
-    if user && user.api_token == request.headers['X-API-TOKEN']
-    else
+    email = request.headers['HTTP_X_USER_EMAIL']
+    token = request.headers['HTTP_X_API_TOKEN']
+    @current_user = User.where(email: email).take
+    unless @current_user && @current_user.api_token == token
       head 401
     end
   end
