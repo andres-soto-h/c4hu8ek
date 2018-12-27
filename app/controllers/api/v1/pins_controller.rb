@@ -15,13 +15,11 @@ class Api::V1::PinsController < ApplicationController
   end
 
   def basic_auth
-    authenticate_or_request_with_http_basic do |X-User-Email, X-Api-Token|
-      user = User.find_by_email(X-User-Email)
-      if user && user.api_token == X-Api-Token
-       sign_in user
-      else
-        head 401
-      end
+    user = User.find_by_email(request.headers['X-User-Email'])
+    if user && user.api_token == request.headers['X-Api-Token']
+      sign_in user
+    else
+      head 401
     end
   end
 
