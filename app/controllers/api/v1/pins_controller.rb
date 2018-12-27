@@ -15,8 +15,8 @@ class Api::V1::PinsController < ApplicationController
   end
 
   def basic_auth
-    user = User.find_by(email: request.headers['X-User-Email'])
-    if user && user.api_token == request.headers['X-Api-Token']
+    user = User.find_by(email: request.headers['X-USER-EMAIL'])
+    if user && user.api_token == request.headers['X-API-TOKEN']
       sign_in user
     else
       head 401
